@@ -26,3 +26,13 @@ def test_error_on_too_many_elements():
     xml = "<root><child>42</child><child>43</child></root>"
     with pytest.raises(ValueError):
         SimpleElement(xml)
+
+
+class MultipleElement(Model):
+    children: list[int] = Element("child")
+
+
+def test_multiple_element():
+    xml = "<root><child>42</child><child>43</child></root>"
+    model = MultipleElement(xml)
+    assert model.children == [42, 43]
