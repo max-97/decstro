@@ -7,9 +7,6 @@ class SimpleElement(Model):
     child: int = Element("child")
 
 
-xml_error = "<root><child>notAnInt</child></root>"
-
-
 def test_simple_element():
     xml = "<root><child>42</child></root>"
     model = SimpleElement(xml)
@@ -36,3 +33,10 @@ def test_multiple_element():
     xml = "<root><child>42</child><child>43</child></root>"
     model = MultipleElement(xml)
     assert model.children == [42, 43]
+
+
+def test_element_without_annotation_errors():
+    with pytest.raises(RuntimeError):
+        class ElementWithoutAnnotation(Model):
+            child = Element("child")
+

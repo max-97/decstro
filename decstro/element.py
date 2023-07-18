@@ -20,9 +20,6 @@ class Element:
             else:
                 if len(elements) > 1:
                     raise ValueError(f"Multiple elements found for {self.expression} but only one expected.")
-                if self.annotation:
-                    return self.annotation(elements[0])
-                else:
-                    return elements[0]
+                return self.annotation(elements[0])
         else:
             return self.default
