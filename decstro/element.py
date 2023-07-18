@@ -22,10 +22,11 @@ class Element:
                 else:
                     return elements
             else:
-                first = elements[0]
+                if len(elements) > 1:
+                    raise ValueError(f"Multiple elements found for {self.expression} but only one expected.")
                 if self.annotation:
-                    return self.annotation(first)
+                    return self.annotation(elements[0])
                 else:
-                    return first
+                    return elements[0]
         else:
             return self.default
