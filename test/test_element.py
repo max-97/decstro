@@ -39,4 +39,3 @@ def test_element_without_annotation_errors():
     with pytest.raises(RuntimeError):
         class ElementWithoutAnnotation(Model):
             child = Element("child")
-

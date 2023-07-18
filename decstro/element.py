@@ -1,3 +1,6 @@
+from typing import Union
+
+
 class Element:
     def __init__(self, expression, /, default=None):
         self.expression = f"./{expression}"
@@ -15,11 +18,22 @@ class Element:
     def extract(self, xml):
         elements = xml.xpath(self.expression)
         if elements:
-            if hasattr(self.annotation, '__origin__') and self.annotation.__origin__ is list:
+            if self._is_list_type(self.annotation):
                 return [self.annotation.__args__[0](x) for x in elements]
             else:
                 if len(elements) > 1:
                     raise ValueError(f"Multiple elements found for {self.expression} but only one expected.")
+                if self._is_optional_type(self.annotation):
+                    return self.annotation.__args__[0](elements[0])
                 return self.annotation(elements[0])
         else:
             return self.default
+
+    @staticmethod
+    def _is_list_type(annotation):
+        return hasattr(annotation, '__origin__') and annotation.__origin__ is list
+
+    @staticmethod
+    def _is_optional_type(annotation):
+        return hasattr(annotation, '__origin__') and annotation.__origin__ is Union and \
+            type(None) in annotation.__args__ and len(annotation.__args__) == 2
