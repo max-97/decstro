@@ -1,6 +1,6 @@
 class Element:
     def __init__(self, expression, /, default=None, multiple=False):
-        self.expression = expression
+        self.expression = f"./{expression}"
         self.default = default
         self.multiple = multiple
 

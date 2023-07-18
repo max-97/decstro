@@ -1,3 +1,5 @@
 /venv
 .git
 .idea
+/build
+/decstro.egg-info
