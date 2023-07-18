@@ -8,6 +8,7 @@ class SimpleElement(Model):
 
 
 xml = "<root><child>42</child></root>"
+xml_error = "<root><child>notAnInt</child></root>"
 
 
 def test_simple_element():
@@ -15,9 +16,6 @@ def test_simple_element():
     assert model.child == 42
 
 
-xml_error = "<root><child>notAnInt</child></root>"
-
-
 def test_simple_element_error():
     with pytest.raises(ValueError):
-        SimpleElement(xml_error).child
+        SimpleElement(xml_error)

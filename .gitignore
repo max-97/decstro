@@ -3,3 +3,4 @@
 .idea
 /build
 /decstro.egg-info
+/.pytest_cache

@@ -10,3 +10,6 @@ class Model:
             self.xml = data
         else:
             raise TypeError("Unsupported data type:", type(data))
+
+        for attributes in self.__class__.__dict__['__annotations__'].keys():
+            self.__class__.__dict__[attributes].__get__(self, self.__class__)
