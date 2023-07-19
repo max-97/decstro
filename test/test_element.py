@@ -1,3 +1,5 @@
+from typing import Optional
+
 import pytest
 
 from decstro import Model, Element
@@ -53,3 +55,13 @@ def test_element_without_annotation_errors():
     with pytest.raises(RuntimeError):
         class ElementWithoutAnnotation(Model):
             child = Element("child")
+
+
+class OptionalElement(Model):
+    child: Optional[int] = Element("child", default=42)
+
+
+def test_optional_element():
+    xml = "<root></root>"
+    model = OptionalElement(xml)
+    assert model.child == 42
