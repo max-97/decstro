@@ -25,6 +25,20 @@ def test_error_on_too_many_elements():
         SimpleElement(xml)
 
 
+class ManyElements(Model):
+    a: str = Element("a")
+    b: int = Element("b")
+    c: float = Element("c")
+
+
+def test_many_elements():
+    xml = "<root><a>foo</a><b>42</b><c>3.14</c></root>"
+    model = ManyElements(xml)
+    assert model.a == "foo"
+    assert model.b == 42
+    assert model.c == 3.14
+
+
 class MultipleElement(Model):
     children: list[int] = Element("child")
 
