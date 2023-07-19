@@ -27,6 +27,12 @@ def test_error_on_too_many_elements():
         SimpleElement(xml)
 
 
+def test_error_on_no_elements():
+    xml = "<root></root>"
+    with pytest.raises(ValueError):
+        SimpleElement(xml)
+
+
 class ManyElements(Model):
     a: str = Element("a")
     b: int = Element("b")
@@ -61,7 +67,23 @@ class OptionalElement(Model):
     child: Optional[int] = Element("child", default=42)
 
 
-def test_optional_element():
+def test_optional_element_with_default():
     xml = "<root></root>"
     model = OptionalElement(xml)
     assert model.child == 42
+
+
+def test_optional_element():
+    xml = "<root><child>41</child></root>"
+    model = OptionalElement(xml)
+    assert model.child == 41
+
+
+class OptionalElementWithNone(Model):
+    child: Optional[int] = Element("child")
+
+
+def test_optional_element_with_none():
+    xml = "<root></root>"
+    model = OptionalElementWithNone(xml)
+    assert model.child is None

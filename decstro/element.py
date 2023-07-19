@@ -27,6 +27,10 @@ class Element:
                     return self.annotation.__args__[0](elements[0])
                 return self.annotation(elements[0])
         else:
+            if not self._is_optional_type(self.annotation) and self.default is None:
+                raise ValueError(f"""Element {self.expression} not found and no non-None default provided. Check the 
+                XML definition or make the element optional.""")
+
             return self.default
 
     @staticmethod
